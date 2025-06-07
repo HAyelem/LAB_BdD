@@ -268,5 +268,96 @@ SELECT COUNT(DISTINCT product_id) AS unique_products
 FROM ic_products;
 ```
 # SQL-ZOO
+## SELECT Basics
+
+### 1. Población de Alemania
+sql
+SELECT population FROM world WHERE name = 'Germany';
+
+
+### 2. Población de Escandinavia
+sql
+SELECT name, population FROM world WHERE name IN ('Sweden', 'Norway', 'Denmark');
+
+
+### 3. Área entre 200,000 y 250,000
+sql
+SELECT name, area FROM world WHERE area BETWEEN 200000 AND 250000;
+
+
+## SELECT Basics Quiz
+
+### 1. Población entre 1M y 1.25M
+sql
+SELECT name, population FROM world WHERE population BETWEEN 1000000 AND 1250000;
+
+
+### 2. Nombre comienza con "Al"
+sql
+SELECT name, population FROM world WHERE name LIKE 'Al%';
+
+
+### 3. Nombre comienza con "a" o "l"
+sql
+SELECT name FROM world WHERE name LIKE 'a%' OR name LIKE 'l%';
+
+
+### 4. Nombres de 5 letras en Europa
+sql
+SELECT name, LENGTH(name) FROM world WHERE LENGTH(name) = 5 AND region = 'Europe';
+
+
+### 5. Doble del área
+sql
+SELECT name, area * 2 FROM world WHERE population = 64000;
+
+
+### 6. Área y población pequeñas
+sql
+SELECT name, area, population FROM world WHERE area < 50000 AND population < 10000000;
+
+
+### 7. Densidad poblacional
+sql
+SELECT name, area / population FROM world WHERE name IN ('China', 'Nigeria', 'France', 'Australia');
+
+
+## SELECT Names
+
+### Variaciones con LIKE
+sql
+-- Comienza con "Y"
+SELECT name FROM world WHERE name LIKE 'Y%';
+-- Termina en "Y"
+SELECT name FROM world WHERE name LIKE '%Y';
+-- Contiene "x"
+SELECT name FROM world WHERE name LIKE '%x%';
+-- Termina con "land"
+SELECT name FROM world WHERE name LIKE '%land';
+-- Empieza con "C" y termina en "ia"
+SELECT name FROM world WHERE name LIKE 'C%ia';
+-- Contiene "oo"
+SELECT name FROM world WHERE name LIKE '%oo%';
+-- Contiene "a" tres veces
+SELECT name FROM world WHERE name LIKE '%a%a%a%';
+-- Segundo carácter es "t"
+SELECT name FROM world WHERE name LIKE '_t%';
+-- Contiene patrón "o__o"
+SELECT name FROM world WHERE name LIKE '%o__o%';
+-- Nombres de 4 letras
+SELECT name FROM world WHERE LENGTH(name) = 4;
+
+
+## Relaciones nombre-capital
+sql
+-- Mismo nombre que capital
+SELECT name FROM world WHERE name = capital;
+-- Capital termina en " City"
+SELECT name FROM world WHERE capital LIKE '% City';
+-- Capital contiene el nombre del país
+SELECT capital, name FROM world WHERE capital LIKE CONCAT('%', name, '%');
+-- Capital contiene el nombre del país y es más larga
+SELECT capital, name FROM world WHERE capital LIKE CONCAT('%', name, '%') AND LENGTH(capital) > LENGTH(name);
+
 # SQL-BEECROWD
 # SQL-HACKER_RANK
