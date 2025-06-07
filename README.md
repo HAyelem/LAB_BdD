@@ -338,3 +338,134 @@ FROM ic_products;
 
 # SQL-BEECROWD
 # SQL-HACKER_RANK
+
+## Aggregation
+
+### 1. Average Population
+```sql
+
+### 2. Japan Population
+```
+
+### 3. Population Density Difference
+```sql
+
+### 4. Revising Aggregations
+```
+
+### 5. Count Function
+```sql
+
+### 6. Sum Function
+```
+
+### 7. The Blunder
+```sql
+
+### 8. Top Earners
+```
+
+### 9. Weather Station 13
+```sql
+
+### 10. Weather Station 14
+```
+
+### 11. Weather Station 15
+```sql
+
+### 12. Weather Station 16
+```
+
+### 13. Weather Station 17
+```sql
+
+### 14. Weather Station 18
+```
+
+### 15. Weather Station 19
+```sql
+
+### 16. Weather Station 20
+```
+
+---
+
+## Basic JOIN
+
+### 1. African Cities
+```sql
+
+### 2. Asian Population
+```
+
+### 3. Average Population per Continent
+```sql
+
+### 4. The Report
+```
+
+---
+
+## Basic SELECT
+
+### 1. Employee Names
+```sql
+
+### 2. Employee Salaries
+```
+
+### 3. Higher Than 75 Marks
+```sql
+
+### 4. Japanese Cities' Attributes
+```
+
+### 5. Japanese Cities' Names
+```sql
+
+### 6. Revising the Select Query I
+```
+
+### 7. Revising the Select Query II
+```sql
+
+### 8. Select All
+```
+
+### 9. Select By ID
+```sql
+
+### 10. Weather Observation Station 1
+```
+
+### 11. Station: Cities not ending in vowels
+```sql
+
+### 12. Station: Cities not starting or ending in vowels
+```
+
+### 13. Station: Cities not starting AND ending in vowels
+```sql
+
+### 14. Station: Even ID
+```
+
+### 15. Station: Duplicate city count
+```sql
+
+### 16. Station: Shortest and Longest city names
+```
+```sql
+
+### 17. Station: Cities starting with vowels
+```
+
+### 18. Station: Cities ending with vowels
+```sql
+
+### 19. Station: Cities starting and ending with vowels
+```
+
+### 20. Station: Cities not starting with vowels
+
