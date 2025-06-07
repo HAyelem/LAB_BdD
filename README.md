@@ -620,3 +620,271 @@ WHERE CITY REGEXP '^[^aeiou].*[^aeiou]$';
 SELECT DISTINCT CITY FROM STATION
 WHERE ID % 2 = 0;
 ```
+
+
+## LEVEL 2
+
+### EJERCICIO 2604 - Under 10 or Greater Than 100
+```
+solucion:
+SELECT id, name
+FROM products
+WHERE price < 10 OR price > 100;
+```
+
+### EJERCICIO 2613 - Cheap Movies
+```
+solucion:
+SELECT m.id, m.name
+FROM movies m
+INNER JOIN prices p ON m.id_prices = p.id
+WHERE p.value < 2;
+```
+
+### EJERCICIO 2619 - Super Luxury
+```
+solucion:
+SELECT p.name, pr.name, p.price
+FROM products p
+INNER JOIN providers pr ON p.id_providers = pr.id
+INNER JOIN categories c ON p.id_categories = c.id
+WHERE p.price > 1000 AND c.name = 'Super Luxury';
+```
+
+### EJERCICIO 2994 - How much does a Doctor earn?
+```
+solucion:
+SELECT d.name, ROUND(SUM(a.hours * 150 + a.hours * 150 * (w.bonus / 100)), 1) AS salary
+FROM doctors d
+INNER JOIN attendances a ON d.id = a.id_doctor
+INNER JOIN work_shifts w ON a.id_work_shift = w.id
+GROUP BY d.id
+ORDER BY salary DESC;
+```
+
+### EJERCICIO 3480 - Adjacent Chairs
+```
+solucion:
+SELECT c1.queue, c1.id AS left, c2.id AS right
+FROM chairs c1
+JOIN chairs c2 ON c1.queue = c2.queue AND c1.id + 1 = c2.id
+WHERE c1.available = TRUE AND c2.available = TRUE
+ORDER BY c1.id;
+```
+
+### EJERCICIO 3481 - Classifying a Tree
+```
+solucion:
+SELECT n.id,
+    CASE 
+        WHEN n.parent_id IS NULL THEN 'ROOT'
+        WHEN c.id IS NULL THEN 'LEAF'
+        ELSE 'INNER'
+    END AS type
+FROM nodes n
+LEFT JOIN nodes c ON n.id = c.parent_id
+GROUP BY n.id, n.parent_id
+ORDER BY n.id;
+```
+
+### EJERCICIO 3482 - Followers
+```
+solucion:
+SELECT
+    CASE WHEN u1.posts < u2.posts THEN u1.name ELSE u2.name END AS user_with_fewer_posts,
+    CASE WHEN u1.posts < u2.posts THEN u2.name ELSE u1.name END AS user_with_more_posts
+FROM follows f1
+JOIN follows f2 ON f1.follower_id = f2.followed_id AND f1.followed_id = f2.follower_id
+JOIN users u1 ON f1.follower_id = u1.id
+JOIN users u2 ON f1.followed_id = u2.id
+WHERE u1.id < u2.id
+ORDER BY CASE WHEN u1.posts < u2.posts THEN u1.id ELSE u2.id END;
+```
+
+### EJERCICIO 3483 - Second Largest and Smallest
+```
+solucion:
+SELECT city_name, population
+FROM cities
+WHERE population = (
+    SELECT DISTINCT population FROM cities ORDER BY population DESC LIMIT 1 OFFSET 1
+)
+UNION ALL
+SELECT city_name, population
+FROM cities
+WHERE population = (
+    SELECT DISTINCT population FROM cities ORDER BY population ASC LIMIT 1 OFFSET 1
+)
+ORDER BY population DESC;
+```
+
+## LEVEL 3
+
+### EJERCICIO 2606 - Categories
+```
+solucion:
+SELECT p.id, p.name
+FROM products p
+JOIN categories c ON p.id_categories = c.id
+WHERE c.name LIKE 'super%';
+```
+
+### EJERCICIO 2610 - Average Value of Products
+```
+solucion:
+SELECT ROUND(AVG(price), 2) AS price
+FROM products;
+```
+
+### EJERCICIO 2618 - Imported Products
+```
+solucion:
+SELECT p.name, pr.name, c.name
+FROM products p
+INNER JOIN providers pr ON p.id_providers = pr.id
+INNER JOIN categories c ON p.id_categories = c.id
+WHERE pr.name = 'Sansul SA' AND c.name = 'Imported';
+```
+
+### EJERCICIO 2620 - Orders in First Half
+```
+solucion:
+SELECT c.name, o.id
+FROM customers c
+INNER JOIN orders o ON c.id = o.id_customers
+WHERE EXTRACT(MONTH FROM o.orders_date) <= 6;
+```
+
+### EJERCICIO 2621 - Amounts Between 10 and 20
+```
+solucion:
+SELECT pr.name
+FROM providers p
+INNER JOIN products pr ON p.id = pr.id_providers
+WHERE (pr.amount >= 10 AND pr.amount <= 20) AND p.name LIKE 'P%';
+```
+
+### EJERCICIO 2624 - Number of Cities per Customers
+```
+solucion:
+SELECT COUNT(DISTINCT(city))
+FROM customers;
+```
+
+### EJERCICIO 2743 - Number of Characters
+```
+solucion:
+SELECT name, LENGTH(name)
+FROM people
+ORDER BY LENGTH(name) DESC;
+```
+
+### EJERCICIO 2745 - Taxes
+```
+solucion:
+SELECT name, ROUND(salary * 0.10, 2) AS tax
+FROM people
+WHERE salary > 3000;
+```
+
+### EJERCICIO 2993 - Most Frequent
+```
+solucion:
+SELECT amount
+FROM value_table
+GROUP BY amount
+ORDER BY COUNT(amount) DESC
+LIMIT 1;
+```
+
+## LEVEL 4
+
+### EJERCICIO 2602 - Basic Select
+```
+solucion:
+SELECT name
+FROM customers
+WHERE state = 'RS';
+```
+
+### EJERCICIO 2605 - Executive Representatives
+```
+solucion:
+SELECT p.name, pr.name
+FROM products p
+INNER JOIN providers pr ON p.id_providers = pr.id
+INNER JOIN categories c ON p.id_categories = c.id
+WHERE c.id = 6;
+```
+
+### EJERCICIO 2611 - Action Movies
+```
+solucion:
+SELECT m.id, m.name
+FROM movies m
+JOIN genres g ON m.id_genres = g.id
+WHERE g.description = 'Action';
+```
+
+### EJERCICIO 2623 - Categories with Various Products
+```
+solucion:
+SELECT products.name, categories.name
+FROM products
+INNER JOIN categories ON products.id_categories = categories.id
+WHERE products.amount > 100 AND categories.id IN (1,2,3,6,9)
+ORDER BY categories.id ASC;
+```
+
+### EJERCICIO 2625 - CPF Validation
+```
+solucion:
+SELECT 
+  LPAD(SUBSTRING(cpf, 1, 3), 3, '0') || '.' ||
+  LPAD(SUBSTRING(cpf, 4, 3), 3, '0') || '.' ||
+  LPAD(SUBSTRING(cpf, 7, 3), 3, '0') || '-' ||
+  LPAD(SUBSTRING(cpf, 10, 2), 2, '0') AS CPF
+FROM natural_person;
+```
+
+### EJERCICIO 2738 - Contest
+```
+solucion:
+SELECT c.name,
+       ROUND(((s.math * 2) + (s.specific * 3) + (s.project_plan * 5)) / 10.0, 2) AS avg
+FROM candidate c
+JOIN score s ON c.id = s.candidate_id
+ORDER BY avg DESC;
+```
+
+### EJERCICIO 2988 - Cearense Championship
+```
+solucion:
+SELECT t.name,
+       COUNT(m.id) AS matches,
+       SUM(CASE WHEN (t.id = m.team_1 AND m.team_1_goals > m.team_2_goals)
+                 OR (t.id = m.team_2 AND m.team_2_goals > m.team_1_goals)
+           THEN 1 ELSE 0 END) AS victories,
+       SUM(CASE WHEN (t.id = m.team_1 AND m.team_1_goals < m.team_2_goals)
+                 OR (t.id = m.team_2 AND m.team_2_goals < m.team_1_goals)
+           THEN 1 ELSE 0 END) AS defeats,
+       SUM(CASE WHEN m.team_1_goals = m.team_2_goals THEN 1 ELSE 0 END) AS draws,
+       SUM(CASE WHEN (t.id = m.team_1 AND m.team_1_goals > m.team_2_goals)
+                 OR (t.id = m.team_2 AND m.team_2_goals > m.team_1_goals)
+           THEN 3 WHEN m.team_1_goals = m.team_2_goals THEN 1 ELSE 0 END) AS score
+FROM teams t
+JOIN matches m ON t.id = m.team_1 OR t.id = m.team_2
+GROUP BY t.name
+ORDER BY score DESC;
+```
+
+### EJERCICIO 2990 - Employees CPF
+```
+solucion:
+SELECT e.cpf, e.enome, d.dnome
+FROM empregados e
+JOIN departamentos d ON e.dnumero = d.dnumero
+WHERE e.cpf NOT IN (SELECT cpf_emp FROM trabaja)
+ORDER BY e.cpf;
+```
+
