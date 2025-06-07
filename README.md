@@ -770,7 +770,6 @@ solucion:
 SELECT COUNT(DISTINCT(city))
 FROM customers;
 ```
-
 ### EJERCICIO 2743 - Number of Characters
 ```
 solucion:
