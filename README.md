@@ -620,8 +620,6 @@ WHERE CITY REGEXP '^[^aeiou].*[^aeiou]$';
 SELECT DISTINCT CITY FROM STATION
 WHERE ID % 2 = 0;
 ```
-
-
 ## LEVEL 2
 
 ### EJERCICIO 2604 - Under 10 or Greater Than 100
